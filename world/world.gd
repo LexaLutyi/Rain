@@ -74,6 +74,23 @@ func _input(event):
 			mouse_postition_end = event.position
 			add_wind(mouse_postition_start, mouse_postition_end)
 			dragging = false
+			
+	var wind_direction = Vector2.ZERO
+	if Input.is_action_pressed("add_wind_left"):
+		wind_direction += Vector2(-100, 0)
+	if Input.is_action_pressed("add_wind_up"):
+		wind_direction += Vector2(0, -100)
+	if Input.is_action_pressed("add_wind_right"):
+		wind_direction += Vector2(100, 0)
+	if Input.is_action_pressed("add_wind_down"):
+		wind_direction += Vector2(0, 100)
+	var a = Input.is_action_just_pressed("add_wind_left")
+	var b = Input.is_action_just_pressed("add_wind_up")
+	var c = Input.is_action_just_pressed("add_wind_right")
+	var d = Input.is_action_just_pressed("add_wind_down")
+	if (a or b or c or d) and wind_direction.length() > 0:
+		var mouse_position = get_local_mouse_position()
+		add_wind(mouse_position, mouse_position + wind_direction)
 
 
 func add_wind(position_start, position_end):
