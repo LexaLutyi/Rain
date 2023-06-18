@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://de6jnlu78r4aw"]
+
+[ext_resource type="Script" path="res://hero/hero.gd" id="1_frd80"]
+[ext_resource type="Texture2D" uid="uid://crp23gwof3tbf" path="res://hero/hero.png" id="1_u4ryi"]
+[ext_resource type="PackedScene" uid="uid://dt8cg43gk8brr" path="res://wind/wind.tscn" id="2_0w2jo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utm5a"]
+size = Vector2(112, 208)
+
+[node name="Hero" type="RigidBody2D" groups=["hero"]]
+collision_layer = 2
+collision_mask = 2
+mass = 57.0
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_frd80")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_utm5a")
+
+[node name="Wind" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(40, -104)
+rotation = -0.785398
+frame = 8
+desrtoy_time = 100000.0
+
+[node name="Wind2" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(8, -160)
+rotation = -1.5708
+frame = 11
+desrtoy_time = 100000.0
+
+[node name="Wind4" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(0, -88)
+rotation = -1.5708
+wind_power = 200
+frame = 8
+desrtoy_time = 100000.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.120428
+texture = ExtResource("1_u4ryi")
+offset = Vector2(-20, 30)
+flip_h = true
+
+[node name="Wind5" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(-32, -88)
+rotation = -2.35619
+frame = 6
+desrtoy_time = 100000.0
+
+[node name="Wind7" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(0, -32)
+rotation = -1.5708
+wind_power = 200
+frame = 4
+desrtoy_time = 100000.0
+
+[node name="Wind8" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(-40, 56)
+rotation = -1.5708
+wind_power = 200
+frame = 1
+desrtoy_time = 100000.0
+
+[node name="Wind9" parent="." instance=ExtResource("2_0w2jo")]
+position = Vector2(32, 88)
+rotation = -1.45037
+wind_power = 200
+desrtoy_time = 100000.0

@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://bmsgaflgovptw"]
+
+[ext_resource type="PackedScene" uid="uid://tpvb6mb7f283" path="res://drop/drop.tscn" id="1_r0w3s"]
+[ext_resource type="Script" path="res://world/world.gd" id="1_usikx"]
+[ext_resource type="PackedScene" uid="uid://dt8cg43gk8brr" path="res://wind/wind.tscn" id="3_rlkpg"]
+[ext_resource type="PackedScene" uid="uid://bh35cwv1ygp1n" path="res://enemy/fire_enemy.tscn" id="4_87cys"]
+[ext_resource type="PackedScene" uid="uid://cgnm5g373ox1w" path="res://score/score.tscn" id="5_p74ak"]
+[ext_resource type="Texture2D" uid="uid://methtt8ehaog" path="res://world/night_forest.jpg" id="6_ch5sv"]
+[ext_resource type="PackedScene" uid="uid://de6jnlu78r4aw" path="res://hero/hero.tscn" id="9_w8mym"]
+[ext_resource type="AudioStream" uid="uid://co0vm3o57b6is" path="res://world/rain-in-forest-birds-nature-111405.mp3" id="10_476ts"]
+
+[sub_resource type="Curve2D" id="Curve2D_srfc5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -64, -64, 0, 0, 0, 0, 1216, -64)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75nxd"]
+size = Vector2(1408, 776)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_usikx")
+drop_scene = ExtResource("1_r0w3s")
+wind_scene = ExtResource("3_rlkpg")
+enemy_scene = ExtResource("4_87cys")
+score_scene = ExtResource("5_p74ak")
+
+[node name="DropEntry" type="Path2D" parent="."]
+curve = SubResource("Curve2D_srfc5")
+
+[node name="DropEntryLocation" type="PathFollow2D" parent="DropEntry"]
+position = Vector2(-64, -64)
+
+[node name="DropPeriod" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="Air" type="Area2D" parent="."]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Air"]
+position = Vector2(576, 260)
+shape = SubResource("RectangleShape2D_75nxd")
+
+[node name="NightForest" type="Sprite2D" parent="Air"]
+modulate = Color(0.396078, 0.396078, 0.396078, 1)
+position = Vector2(576, 260)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("6_ch5sv")
+flip_h = true
+
+[node name="Hero" parent="." instance=ExtResource("9_w8mym")]
+position = Vector2(144, 416)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_476ts")
+volume_db = -25.0
+autoplay = true
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="DropPeriod" to="." method="_on_drop_period_timeout"]
+[connection signal="body_exited" from="Air" to="." method="_on_air_body_exited"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]

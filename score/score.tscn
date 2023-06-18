@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgnm5g373ox1w"]
+
+[ext_resource type="Texture2D" uid="uid://5j47kr0f253l" path="res://enemy/cute.png" id="1_yl7fh"]
+
+[node name="Score" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_yl7fh")
+hframes = 8

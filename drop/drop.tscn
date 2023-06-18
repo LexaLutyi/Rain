@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://tpvb6mb7f283"]
+
+[ext_resource type="Script" path="res://drop/drop.gd" id="1_eg8f3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p6f5c"]
+radius = 2.0
+
+[node name="Drop" type="RigidBody2D" groups=["drops"]]
+mass = 0.01
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_eg8f3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_p6f5c")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-1.04308e-07, 1.49012e-08)
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(2.08616e-07, -4, 3, -3, 4, 0, 3, 3, 2.08616e-07, 4, -3, 3, -4, 0, -3, -3)
+
+[node name="MergeTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="MergeTimer" to="." method="_on_merge_timer_timeout"]

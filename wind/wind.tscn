@@ -1,0 +1,134 @@
+[gd_scene load_steps=18 format=3 uid="uid://dt8cg43gk8brr"]
+
+[ext_resource type="Script" path="res://wind/Wind.gd" id="1_tf87b"]
+[ext_resource type="Texture2D" uid="uid://li103or3qjnw" path="res://wind/wind.png" id="2_qk3ts"]
+[ext_resource type="AudioStream" uid="uid://c5k1hs522fd5" path="res://wind/whoosh_long_low-6087.mp3" id="3_qhctq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7p0jd"]
+radius = 64.4981
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qptrq"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(0, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adl8v"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(162, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6cjd"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(324, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8s5lg"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(486, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydb1i"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(648, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xsyok"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(972, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3xnu"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(810, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xtcm"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(1296, 0, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7uul"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(0, 225, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mfi3"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(162, 225, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dpv4"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(324, 225, 162, 225)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ichmu"]
+atlas = ExtResource("2_qk3ts")
+region = Rect2(486, 225, 162, 225)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1clhk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qptrq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adl8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6cjd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8s5lg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydb1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xsyok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3xnu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xtcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7uul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mfi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dpv4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ichmu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Wind" type="Area2D"]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_tf87b")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_7p0jd")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+color = Color(0.313726, 0.639216, 1, 1)
+polygon = PackedVector2Array(-48, -48, 0, -64, 48, -48, 64, 0, 48, 48, 0, 64, -48, 48, -64, 0)
+
+[node name="DestroyTimer" type="Timer" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.779575, 0.580139)
+sprite_frames = SubResource("SpriteFrames_1clhk")
+autoplay = "default"
+frame = 7
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_qhctq")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
